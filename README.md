@@ -1,5 +1,7 @@
 # TenantFlow · multi-tenant AI workflow SaaS
 
+![Synthetic tenant dashboard](docs/images/hero.png)
+
 > Independent clean-room portfolio demo. Synthetic organizations, knowledge and content. No company source, UI or customer data.
 
 ![Architecture](docs/images/architecture.svg)
