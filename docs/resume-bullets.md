@@ -1,15 +1,21 @@
-# Resume bullets
+# 多租户 AI 工作流演示 — 中文简历项目要点
 
-These bullets describe the public synthetic demo only. Do not claim production use.
+仅描述公开仓库内可核查的自建演示；按岗位挑选，勿三版叠加。证据与边界以 README、测试和 [case study](case-study.md) 为准。
 
-## 中文简历版本
+## AI Engineer / FDE
 
-- 设计多租户知识与内容审核系统；使用 Node TypeScript 实现租户隔离、父子共享、RBAC 与审计；7 项离线测试通过。
-- 设计可复用的输入、状态与失败边界；通过仓库 README、架构图与示例输出展示实现方式。
-- 区分离线测试、合成夹具和真实外部验证；避免将 Mock 结果写成生产效果。
+- 围绕“共享知识与内容审批时，如何同时保持租户隔离和可追溯”，用 Node.js、浏览器端共享策略核心、GitHub Pages 实现租户/角色过滤、私有与共享知识、提交—审核—批准/驳回—发布状态机及审计。
+- 验证：10 项离线测试及本地/线上浏览器交互；当前验证的是确定性权限/状态逻辑，不是连接模型后的回答质量。
+- 明确边界：演示口令只是角色选择，不是真实身份认证；没有生产租户数据。
 
-## English resume version
+## AI Product / Solution
 
-- Built a multi-tenant knowledge and review demo in Node/TypeScript with tenant filtering, inheritance, RBAC and audit; 7 offline tests pass.
-- Documented the architecture, state transitions and failure paths with runnable examples and repository evidence.
-- Separated local verification, synthetic fixtures and unverified external integrations in the public handoff.
+- 将“共享知识与内容审批时，如何同时保持租户隔离和可追溯”拆成可点击的用户流程，交付租户/角色过滤、私有与共享知识、提交—审核—批准/驳回—发布状态机及审计。
+- 用可运行 Demo、测试和案例页说明实现与限制；10 项离线测试及本地/线上浏览器交互。
+- 为客户化落地列出前置条件：真实认证、持久化存储、并发控制、权限审计和租户隔离渗透测试。
+
+## 实习 / 校招
+
+- 独立完成多租户 AI 工作流演示的公开演示、代码、测试和文档，技术栈为 Node.js、浏览器端共享策略核心、GitHub Pages。
+- 解决“同一策略在服务端和浏览器演示中保持一致”，保留可复核的验证：10 项离线测试及本地/线上浏览器交互。
+- 不把演示包装成上线业务：演示口令只是角色选择，不是真实身份认证；没有生产租户数据。

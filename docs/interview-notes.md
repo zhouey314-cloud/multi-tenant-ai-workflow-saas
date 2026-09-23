@@ -1,12 +1,29 @@
-# Interview notes
+# 多租户 AI 工作流演示 — 面试讲述卡
 
-1. **Why?** To make multi tenant ai workflow saas an inspectable portfolio artifact.
-2. **Hardest problem?** Access isolation and state transitions.
-3. **Why this architecture?** Keep policy and workflow logic independent from transport and external providers.
-4. **Where is AI?** The design marks provider boundaries; any disconnected model remains unverified.
-5. **What stays human?** Final review, business truth and any external release decision.
-6. **How verified?** Run the tests and sample commands in README; inspect their exact scope.
-7. **Failure learned?** Public demo passwords and JSON storage are intentional limitations.
-8. **Redo?** Add reviewed cases and a narrower production migration path.
-9. **Production scale?** Add real auth, durable storage, observability, privacy review and provider-backed evals where relevant.
-10. **My contribution?** Independent clean-room code, tests, docs and public release; no company source copied.
+## 60 秒
+
+我做这个自建项目是为了解决“共享知识与内容审批时，如何同时保持租户隔离和可追溯”。用 Node.js、浏览器端共享策略核心、GitHub Pages 做了租户/角色过滤、私有与共享知识、提交—审核—批准/驳回—发布状态机及审计。最难的是同一策略在服务端和浏览器演示中保持一致。目前证据是10 项离线测试及本地/线上浏览器交互。但演示口令只是角色选择，不是真实身份认证；没有生产租户数据；如果真实落地，下一步是真实认证、持久化存储、并发控制、权限审计和租户隔离渗透测试。
+
+## 3 分钟
+
+先演示核心路径：租户/角色过滤、私有与共享知识、提交—审核—批准/驳回—发布状态机及审计。再打开仓库中的测试与案例页，解释为什么把状态/证据留在可检查的位置。重点讲一个取舍：同一策略在服务端和浏览器演示中保持一致。最后明确验证范围：10 项离线测试及本地/线上浏览器交互；当前验证的是确定性权限/状态逻辑，不是连接模型后的回答质量。不把演示、合成样本和生产效果混为一谈。
+
+## 10 分钟技术深挖
+
+1. 展示 README 的 Quick Start 与架构图/目录。
+2. 从一个输入走到状态变化或输出，指出 租户/角色过滤、私有与共享知识、提交—审核—批准/驳回—发布状态机及审计 对应的源代码。
+3. 现场说明最难问题：同一策略在服务端和浏览器演示中保持一致；对照测试或复现步骤。
+4. 解释失败路径及限制：演示口令只是角色选择，不是真实身份认证；没有生产租户数据。
+5. 用 真实认证、持久化存储、并发控制、权限审计和租户隔离渗透测试 说明真正上线的优先级和验收证据。
+
+## 九个常见追问
+
+1. **为什么这样设计架构？** 为了把 租户/角色过滤、私有与共享知识、提交—审核—批准/驳回—发布状态机及审计 的核心规则与展示/外部依赖分开，便于检查失败边界。
+2. **最难的 bug/取舍？** 同一策略在服务端和浏览器演示中保持一致；请指向对应测试或演示复现，避免编造线上事故。
+3. **用了什么框架？** Node.js、浏览器端共享策略核心、GitHub Pages。选型服务于静态或离线演示，不等同生产选型结论。
+4. **上线还差什么？** 真实认证、持久化存储、并发控制、权限审计和租户隔离渗透测试。
+5. **如何防止误用？** 演示口令只是角色选择，不是真实身份认证；没有生产租户数据；任何不可逆外部动作需人工确认。
+6. **怎么测试？** 10 项离线测试及本地/线上浏览器交互。先跑 README 命令，再看具体断言，不把 200 或编译当成产品验收。
+7. **AI 在哪里？** 当前验证的是确定性权限/状态逻辑，不是连接模型后的回答质量。不要把确定性规则、提示词或可选模型接口说成已验证的 AI 效果。
+8. **哪些是 Mock？** 演示口令只是角色选择，不是真实身份认证；没有生产租户数据。
+9. **模型怎么评测？个人贡献是什么？** 当前验证的是确定性权限/状态逻辑，不是连接模型后的回答质量。我负责公开仓库里可见的实现、测试和说明；未核验的业务结果与第三方工作不纳入我的贡献。
