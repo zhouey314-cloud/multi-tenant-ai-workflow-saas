@@ -1,5 +1,7 @@
 # TenantFlow · multi-tenant AI workflow SaaS
 
+**LIVE_DEMO** · [Try the browser workflow](https://zhouey314-cloud.github.io/multi-tenant-ai-workflow-saas/) · [Case study](docs/case-study.md) · [Resume bullets](docs/resume-bullets.md) · [Interview notes](docs/interview-notes.md)
+
 **Status:** interactive synthetic browser demo · policy tests 10/10 · no production authentication or model integration.
 
 > Independent clean-room portfolio demo. Synthetic organizations, knowledge and content. No company source, UI or customer data.
