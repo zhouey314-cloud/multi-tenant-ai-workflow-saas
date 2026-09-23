@@ -1,1 +1,1 @@
-{"note":"Runtime seed is defined in src/core.ts so tests and demo use identical synthetic fixtures."}
+{"note":"Runtime seed is defined in src/core.js so the local API and browser demo share the same synthetic policy fixtures."}

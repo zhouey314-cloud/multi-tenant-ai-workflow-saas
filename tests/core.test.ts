@@ -1,4 +1,4 @@
-import {test} from 'node:test';import {strict as assert} from 'node:assert';import {seed,login,visibleKnowledge,visibleTasks,createKnowledge,createTask,transition} from '../src/core.ts';
+import {test} from 'node:test';import {strict as assert} from 'node:assert';import {seed,login,visibleKnowledge,visibleTasks,visibleAudit,createKnowledge,createTask,transition} from '../src/core.js';
 const hq=login('hq@example.com','demo-hq-only')!;const store=login('store@example.com','demo-store-only')!;const reviewer=login('review@example.com','demo-review-only')!;
 test('demo login rejects wrong password',()=>assert.equal(login('hq@example.com','wrong'),null));
 test('shared parent inherited but private parent hidden',()=>assert.deepEqual(visibleKnowledge(seed(),store).map(x=>x.id),['k-hq']));
@@ -7,3 +7,6 @@ test('store cannot share knowledge upward',()=>assert.throws(()=>createKnowledge
 test('task cannot cite inaccessible knowledge',()=>assert.throws(()=>createTask(seed(),store,{id:'bad',title:'x',knowledgeIds:['k-private']})));
 test('state machine enforces human gate and audit',()=>{let s=seed();assert.throws(()=>transition(s,store,'t-1','published'));transition(s,store,'t-1','review');transition(s,reviewer,'t-1','approved');transition(s,hq,'t-1','published');assert.equal(s.audit.length,3)});
 test('reviewer cannot author',()=>assert.throws(()=>createTask(seed(),reviewer,{id:'x',title:'x',knowledgeIds:[]})));
+test('HQ can see its store while store cannot see HQ private',()=>{const s=seed();createKnowledge(s,store,{id:'store-private',title:'Store note',body:'synthetic',visibility:'private'});assert.equal(visibleKnowledge(s,hq).some(x=>x.id==='store-private'),true);assert.equal(visibleKnowledge(s,store).some(x=>x.id==='k-private'),false)});
+test('reviewer can reject but not publish',()=>{const s=seed();transition(s,store,'t-1','review');transition(s,reviewer,'t-1','rejected');assert.equal(s.tasks[0].state,'rejected');assert.throws(()=>transition(s,reviewer,'t-1','published'));transition(s,store,'t-1','draft')});
+test('store audit excludes HQ actions',()=>{const s=seed();createKnowledge(s,hq,{id:'hq-new',title:'HQ note',body:'',visibility:'private'});assert.equal(visibleAudit(s,store).length,0);assert.equal(visibleAudit(s,hq).length,1)});

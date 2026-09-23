@@ -1,6 +1,6 @@
 # Architecture and data model
 
-Browser UI → Node HTTP API → policy functions → JSON demo store. Core functions are isolated from transport and persistence. `Actor` carries tenant, business unit and role. Knowledge and tasks carry tenant and unit. Every lookup filters tenant before any inheritance or role check. A store inherits only parent items marked `shared`; private HQ items stay private. `Audit` records state changes and creations. The JSON store uses atomic rename for demo persistence; production needs a transactional database, tenant scoped SQL policies, real authentication and immutable audit retention.
+`src/core.js` is shared by two adapters: (1) local Node HTTP API → JSON demo store, and (2) GitHub Pages browser app → localStorage. Core functions are isolated from transport and persistence. `Actor` carries tenant, business unit and role. Knowledge and tasks carry tenant and unit. Every lookup filters tenant before inheritance or role checks. A store inherits only parent items marked `shared`; private HQ items stay private. HQ can inspect its store's items. `Audit` records who, when, action and target. The JSON adapter uses atomic rename for demo persistence; the browser adapter is not a security boundary because code and synthetic data download to the client. Production needs a transactional database, tenant-scoped SQL policies, real authentication and immutable audit retention.
 
 ## RBAC matrix
 
@@ -13,8 +13,9 @@ Browser UI → Node HTTP API → policy functions → JSON demo store. Core func
 | Create shared knowledge | Yes | No | No |
 | Submit draft | No | Own unit | No |
 | Approve review | No | No | Yes |
+| Reject review | No | No | Yes |
 | Publish approved | Yes | No | No |
 
 ## State machine
 
-`draft → review → approved → published`; reviewer may return `review → draft`. The API has no real publishing side effect. All content is synthetic. Cross tenant transitions are denied.
+`draft → review → approved → published`; reviewer may also choose `review → rejected`, after which the store can revise with `rejected → draft`. The API has no real publishing side effect. All content is synthetic. Cross-tenant transitions are denied.
