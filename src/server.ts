@@ -18,4 +18,4 @@ createServer(async(req,res)=>{try{
  else if(req.url?.startsWith('/api/tasks/')&&req.method==='POST'){result=transition(db,a,req.url.split('/')[3],input.to);save();}
  else {res.writeHead(404);res.end();return;}
  res.writeHead(200,{'content-type':'application/json'});res.end(JSON.stringify(result));
- }catch(e){res.writeHead(400,{'content-type':'application/json'});res.end(JSON.stringify({error:(e as Error).message}));}}).listen(8788,()=>console.log('Synthetic demo http://localhost:8788'));
+ }catch(e){res.writeHead(400,{'content-type':'application/json'});res.end(JSON.stringify({error:(e as Error).message}));}}).listen(8788,'127.0.0.1',()=>console.log('Synthetic demo http://localhost:8788'));
