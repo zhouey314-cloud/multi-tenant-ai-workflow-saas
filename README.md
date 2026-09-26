@@ -1,6 +1,12 @@
 # TenantFlow · multi-tenant AI workflow SaaS
 
+**A runnable workflow demo for tenant-scoped knowledge and human-gated publishing.** It solves the problem of showing who can see, review and release shared content without crossing tenant boundaries.
+
 **LIVE_DEMO** · [Try the browser workflow](https://zhouey314-cloud.github.io/multi-tenant-ai-workflow-saas/) · [Case study](docs/case-study.md) · [Resume bullets](docs/resume-bullets.md) · [Interview notes](docs/interview-notes.md)
+
+[![CI](https://github.com/zhouey314-cloud/multi-tenant-ai-workflow-saas/actions/workflows/ci.yml/badge.svg)](https://github.com/zhouey314-cloud/multi-tenant-ai-workflow-saas/actions/workflows/ci.yml)
+
+![TenantFlow synthetic workflow browser screenshot](docs/images/hero.png)
 
 **Status:** interactive synthetic browser demo · policy tests 10/10 · no production authentication or model integration.
 
