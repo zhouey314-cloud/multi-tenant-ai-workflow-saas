@@ -10,3 +10,14 @@ test('reviewer cannot author',()=>assert.throws(()=>createTask(seed(),reviewer,{
 test('HQ can see its store while store cannot see HQ private',()=>{const s=seed();createKnowledge(s,store,{id:'store-private',title:'Store note',body:'synthetic',visibility:'private'});assert.equal(visibleKnowledge(s,hq).some(x=>x.id==='store-private'),true);assert.equal(visibleKnowledge(s,store).some(x=>x.id==='k-private'),false)});
 test('reviewer can reject but not publish',()=>{const s=seed();transition(s,store,'t-1','review');transition(s,reviewer,'t-1','rejected');assert.equal(s.tasks[0].state,'rejected');assert.throws(()=>transition(s,reviewer,'t-1','published'));transition(s,store,'t-1','draft')});
 test('store audit excludes HQ actions',()=>{const s=seed();createKnowledge(s,hq,{id:'hq-new',title:'HQ note',body:'',visibility:'private'});assert.equal(visibleAudit(s,store).length,0);assert.equal(visibleAudit(s,hq).length,1)});
+test('unknown roles and mismatched tenant units fail closed without mutation',()=>{
+ for(const actor of [{...store,role:'viewer'},{...store,tenant:'other'}]){
+  const s=seed(),before=JSON.stringify(s);
+  assert.deepEqual(visibleKnowledge(s,actor),[]);
+  assert.deepEqual(visibleTasks(s,actor),[]);
+  assert.deepEqual(visibleAudit(s,actor),[]);
+  assert.throws(()=>createKnowledge(s,actor,{id:'new',title:'x',visibility:'private'}),/FORBIDDEN/);
+  assert.throws(()=>createTask(s,actor,{id:'new',title:'x',knowledgeIds:[]}),/FORBIDDEN/);
+  assert.equal(JSON.stringify(s),before);
+ }
+});
