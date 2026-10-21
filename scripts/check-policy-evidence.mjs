@@ -1,0 +1,23 @@
+import { spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+
+// Compare visible claims with the real core test run, never a source-line count.
+const run = spawnSync(process.execPath, [
+  '--experimental-strip-types', '--test', '--test-reporter=tap', 'tests/core.test.ts',
+], { encoding: 'utf8', timeout: 30_000, maxBuffer: 2_000_000 });
+process.stdout.write(run.stdout ?? '');
+if (run.error || run.status !== 0) {
+  process.stderr.write('Core tests did not finish successfully; evidence check failed.\n');
+  process.exit(1);
+}
+const total = Number(run.stdout.match(/^# tests (\d+)$/m)?.[1]);
+const passed = Number(run.stdout.match(/^# pass (\d+)$/m)?.[1]);
+const readme = readFileSync(process.argv[2] ?? 'README.md', 'utf8');
+const patterns = [/policy tests (\d+)\/(\d+)/g, /the V3 suite is (\d+)\/(\d+)/g];
+const claims = patterns.flatMap(pattern => [...readme.matchAll(pattern)]);
+if (!total || total !== passed || patterns.some(pattern => !readme.match(pattern)) ||
+    claims.some(claim => Number(claim[1]) !== passed || Number(claim[2]) !== total)) {
+  process.stderr.write(`README evidence is missing or stale; actual core tests: ${passed}/${total}.\n`);
+  process.exit(1);
+}
+console.log(`README policy evidence matches the passing core suite: ${passed}/${total}.`);

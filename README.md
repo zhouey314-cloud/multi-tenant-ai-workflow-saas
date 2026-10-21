@@ -8,7 +8,7 @@
 
 ![TenantFlow synthetic workflow browser screenshot](docs/images/hero.png)
 
-**Status:** interactive synthetic browser demo · policy tests 10/10 · no production authentication or model integration.
+**Status:** interactive synthetic browser demo · policy tests 11/11 · no production authentication or model integration.
 
 > Independent clean-room portfolio demo. Synthetic organizations, knowledge and content. No company source, UI or customer data.
 
@@ -32,7 +32,7 @@ Show how enterprise knowledge can flow from HQ to a store while private items re
 
 ## Features and verification
 
-Tenant filtering, parent to child shared knowledge, private records, task transitions, audit trail, synthetic seed and ten offline tests. The baseline was 7/7; the V3 suite is 10/10 with HQ/store visibility, explicit reject and audit isolation. These are deterministic mechanics checks, not a model eval or security certification. No AI provider is connected; task generation is a workflow placeholder. Run `npm test`. See [resume bullets](docs/resume-bullets.md) and [interview notes](docs/interview-notes.md).
+Tenant filtering, parent to child shared knowledge, private records, task transitions, audit trail, synthetic seed and eleven offline tests. The baseline was 7/7; the V3 suite is 11/11 with HQ/store visibility, explicit reject, audit isolation and rejection of unknown roles or mismatched tenant units. These are deterministic mechanics checks, not a model eval or security certification. No AI provider is connected; task generation is a workflow placeholder. Run `npm test`; `npm run check:docs` checks these claims against the actual core test results. See [resume bullets](docs/resume-bullets.md) and [interview notes](docs/interview-notes.md).
 
 ## Status and limitations
 
