@@ -25,7 +25,7 @@ Preventing the browser version from drifting away from the local API policy whil
 The browser downloads the synthetic seed and uses localStorage. UI role filtering illustrates policy, but cannot protect real confidential data. A successful demo is not a security certification.
 
 ## Testing
-`npm test` passes 10 policy tests (baseline 7), including HQ/store visibility, reject/re-draft and audit isolation. Browser scenarios exercised private/shared knowledge, task submission, approval/publication and reset.
+`npm test` passes 11 policy tests (baseline 7), including HQ/store visibility, reject/re-draft and audit isolation. Browser scenarios exercised private/shared knowledge, task submission, approval/publication and reset.
 
 ## Eval
 No model is connected. The eval scope is deterministic workflow mechanics; model quality is `NOT_RUN`. See `evals/PROJECT_EVAL_SPEC.md`.

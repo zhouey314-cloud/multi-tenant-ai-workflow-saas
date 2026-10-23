@@ -12,12 +12,24 @@ if (run.error || run.status !== 0) {
 }
 const total = Number(run.stdout.match(/^# tests (\d+)$/m)?.[1]);
 const passed = Number(run.stdout.match(/^# pass (\d+)$/m)?.[1]);
-const readme = readFileSync(process.argv[2] ?? 'README.md', 'utf8');
-const patterns = [/policy tests (\d+)\/(\d+)/g, /the V3 suite is (\d+)\/(\d+)/g];
-const claims = patterns.flatMap(pattern => [...readme.matchAll(pattern)]);
-if (!total || total !== passed || patterns.some(pattern => !readme.match(pattern)) ||
-    claims.some(claim => Number(claim[1]) !== passed || Number(claim[2]) !== total)) {
-  process.stderr.write(`README evidence is missing or stale; actual core tests: ${passed}/${total}.\n`);
+if (!total || total !== passed) {
+  process.stderr.write(`Core test totals are invalid: ${passed}/${total}.\n`);
   process.exit(1);
 }
-console.log(`README policy evidence matches the passing core suite: ${passed}/${total}.`);
+const documents = [
+  [process.argv[2] ?? 'README.md', [/policy tests (\d+)\/(\d+)/g, /the V3 suite is (\d+)\/(\d+)/g]],
+  ['docs/case-study.md', [/passes (\d+) policy tests/g]],
+  ['docs/interview-notes.md', [/(\d+) 项离线测试/g]],
+  ['docs/resume-bullets.md', [/(\d+) 项离线测试/g]],
+];
+for (const [path, patterns] of documents) {
+  const text = readFileSync(path, 'utf8');
+  const claims = patterns.flatMap(pattern => [...text.matchAll(pattern)]);
+  if (patterns.some(pattern => !text.match(pattern)) ||
+      claims.some(claim => Number(claim[1]) !== passed ||
+        (claim[2] !== undefined && Number(claim[2]) !== total))) {
+    process.stderr.write(`${path}: evidence is missing or stale; actual core tests: ${passed}/${total}.\n`);
+    process.exit(1);
+  }
+}
+console.log(`Policy evidence in ${documents.length} documents matches the passing core suite: ${passed}/${total}.`);
