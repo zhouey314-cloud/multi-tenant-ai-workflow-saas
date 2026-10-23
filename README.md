@@ -18,7 +18,7 @@
 
 **Live Demo:** <https://zhouey314-cloud.github.io/multi-tenant-ai-workflow-saas/>. It runs in your browser using the same `src/core.js` policy functions as the local API. Data is synthetic, persists only in that browser, and can be reset at any time. Demo logins: `hq@example.com` / `demo-hq-only`, `store@example.com` / `demo-store-only`, `review@example.com` / `demo-review-only`. These public passwords are role selectors, **not security controls**.
 
-Local: Node 23+, `npm test`, then `npm start` and open <http://localhost:8788>.
+Local: Node 24 LTS, `npm test`, then `npm start` and open <http://localhost:8788>.
 
 ### Try these scenarios
 
@@ -32,7 +32,7 @@ Show how enterprise knowledge can flow from HQ to a store while private items re
 
 ## Features and verification
 
-Tenant filtering, parent to child shared knowledge, private records, task transitions, audit trail, synthetic seed and eleven offline tests. The baseline was 7/7; the V3 suite is 11/11 with HQ/store visibility, explicit reject, audit isolation and rejection of unknown roles or mismatched tenant units. These are deterministic mechanics checks, not a model eval or security certification. No AI provider is connected; task generation is a workflow placeholder. Run `npm test`; `npm run check:docs` checks these claims against the actual core test results. See [resume bullets](docs/resume-bullets.md) and [interview notes](docs/interview-notes.md).
+Tenant filtering, parent to child shared knowledge, private records, task transitions, audit trail, synthetic seed and eleven offline tests. The baseline was 7/7; the V3 suite is 11/11 with HQ/store visibility, explicit reject, audit isolation and rejection of unknown roles or mismatched tenant units. These are deterministic mechanics checks, not a model eval or security certification. No AI provider is connected; task generation is a workflow placeholder. Run `npm test`; `npm run check:docs` checks README, case-study, interview and resume claims against the actual core test results. See [resume bullets](docs/resume-bullets.md) and [interview notes](docs/interview-notes.md).
 
 ## Status and limitations
 
