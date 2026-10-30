@@ -1,5 +1,10 @@
 # TenantFlow · multi-tenant AI workflow SaaS
 
+把总部、门店与审核人的任务交接做成一条可检查的流程。我负责租户过滤、资料继承、审核状态机、审计及本地 HTTP 持久化。失败请求会回滚内存与审计，提交成功的任务可在重启后继续读取。
+
+[HTTP、事务与失败契约](docs/HTTP_API.md) · [策略 core](src/core.js) · [真实服务回归](tests/server.test.ts)
+
+
 **A runnable workflow demo for tenant-scoped knowledge and human-gated publishing.** It solves the problem of showing who can see, review and release shared content without crossing tenant boundaries.
 
 **LIVE_DEMO** · [Try the browser workflow](https://zhouey314-cloud.github.io/multi-tenant-ai-workflow-saas/) · [Case study](docs/case-study.md) · [Resume bullets](docs/resume-bullets.md) · [Interview notes](docs/interview-notes.md)
