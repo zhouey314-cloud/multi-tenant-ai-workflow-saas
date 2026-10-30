@@ -49,7 +49,7 @@ const errors = {
 async function body(req) {
   let size = 0;
   const parts = [];
-  for await (const chunk of req) {
+  for await (const chunk of req.iterator({ destroyOnReturn: false })) {
     size += chunk.length;
     if (size > 100000) throw Error("TOO_LARGE");
     parts.push(chunk);
@@ -167,7 +167,7 @@ export function createAppServer({
       send(200, result);
     } catch (error) {
       const code = errors[error.message] ?? 500;
-      if (code === 413) res.setHeader("Connection", "close");
+      if (code === 413) { req.resume(); res.setHeader("Connection", "close"); }
       send(code, {
         error: code === 500 ? "PERSISTENCE_OR_INTERNAL_ERROR" : error.message,
         request_id: requestId,

@@ -80,6 +80,9 @@ test("real HTTP commits survive restart and preserve tenant boundaries", async (
 });
 test("bad credentials, schemas, forbidden evidence and unknown routes fail closed", async (t) => {
   await withServer(openRepository(scratch(t)), async (base) => {
+    const oversized = await fetch(base + "/api/tasks", {method:"POST",headers,body:"x".repeat(100001)});
+    assert.equal(oversized.status,413);
+
     assert.equal((await fetch(base + "/api/overview")).status, 401);
     for (const [input, status] of [
       [null, 422],
