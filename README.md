@@ -1,13 +1,18 @@
 # TenantFlow · multi-tenant AI workflow SaaS
 
-把总部、门店与审核人的任务交接做成一条可检查的流程。我负责租户过滤、资料继承、审核状态机、审计及本地 HTTP 持久化。失败请求会回滚内存与审计，提交成功的任务可在重启后继续读取。
+**总部发下来的资料，门店能看哪些？谁能审核，谁能发布？** TenantFlow 把这三个决定做进同一条可追踪链路：租户过滤、共享资料继承、审核状态和操作审计。适合看一个工作流如何处理“谁能看、谁能改”，而不仅是展示页面。
 
-[HTTP、事务与失败契约](docs/HTTP_API.md) · [策略 core](src/core.js) · [真实服务回归](tests/server.test.ts)
+*Tenant-scoped knowledge, human review, and a local HTTP workflow with restart and rollback tests.*
 
+[打开在线演示](https://zhouey314-cloud.github.io/multi-tenant-ai-workflow-saas/) · [HTTP、事务与失败契约](docs/HTTP_API.md) · [策略 core](src/core.js) · [真实服务回归](tests/server.test.ts) · [案例](docs/case-study.md) · [简历](docs/resume-bullets.md) · [面试复盘](docs/interview-notes.md)
 
-**A runnable workflow demo for tenant-scoped knowledge and human-gated publishing.** It solves the problem of showing who can see, review and release shared content without crossing tenant boundaries.
+| 想验证什么 | 从哪里做 |
+| --- | --- |
+| 总部私有资料不该出现在门店 | [打开演示](https://zhouey314-cloud.github.io/multi-tenant-ai-workflow-saas/)，按下方三个场景切角色；先对比私有和共享资料，再查看审核后的审计记录 |
+| 提交后可重启读取，失败不留下幽灵任务 | Node 24 下运行 `npm test`；[HTTP 测试](tests/server.test.ts)以临时存储覆盖写盘故障、回滚以及重启 |
+| 页面角色规则与文档是否一致 | [固定提交的 CI](https://github.com/zhouey314-cloud/multi-tenant-ai-workflow-saas/actions/runs/40997968780)运行 `npm run check:docs`，校对文档和核心规则测试；不等于它执行了全部 HTTP 测试 |
 
-**LIVE_DEMO** · [Try the browser workflow](https://zhouey314-cloud.github.io/multi-tenant-ai-workflow-saas/) · [Case study](docs/case-study.md) · [Resume bullets](docs/resume-bullets.md) · [Interview notes](docs/interview-notes.md)
+**边界：**公开版是浏览器里的虚构数据与演示登录；本地版是单进程监听回环地址的 JSON 存储。二者均不能代替生产 IAM，不连接模型、真实租户或发布系统。
 
 [![CI](https://github.com/zhouey314-cloud/multi-tenant-ai-workflow-saas/actions/workflows/ci.yml/badge.svg)](https://github.com/zhouey314-cloud/multi-tenant-ai-workflow-saas/actions/workflows/ci.yml)
 
